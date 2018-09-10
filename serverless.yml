@@ -1,0 +1,27 @@
+
+service: app-m # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: beta
+  region: us-east-1
+
+functions:
+  nuxt:
+    handler: handler.nuxt
+    events:
+      - http:
+          path: '/'
+          method: get
+      - http:
+          path: '{proxy+}'
+          method: get
+
+plugins:
+  - serverless-apigw-binary
+ 
+custom:
+  apigwBinary:
+    types:
+      - '*/*'
