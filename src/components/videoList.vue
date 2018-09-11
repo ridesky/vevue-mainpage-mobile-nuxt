@@ -26,6 +26,9 @@
 
                 <router-link :to=" '/video/' + video.videoid" class=" title" v-if="video.yuan.title" :title="video.yuan.title">{{video.yuan.title}}</router-link>
                 <div class="videoAvatarBox">
+                  <!-- <router-link :to=" '/user/' + video.yuan.bywho +'/works'">
+                    <img :src="video.avatar" alt="avatar" class="videoAvatar" :onerror='defaultAvatarLogo'>
+                  </router-link> -->
                   <router-link :to=" '/user/' + video.yuan.bywho +'/works'">
                     <img :src="video.avatar" alt="avatar" class="videoAvatar" :onerror='defaultAvatarLogo'>
                   </router-link>
@@ -145,9 +148,9 @@ export default {
       apiUrl,
       showSetInfo: false,
       jsFormat,
-      location: window.location,
+      location: process.client ? window.location : '',
       hideLoading: false,
-      scrollLock: false, // 滚动监听是否加锁
+      scrollLock: true, // 滚动监听是否加锁
       showVideoEle: false,
       showNoMore: false,
       page: 0,
@@ -455,8 +458,9 @@ export default {
 
   .cover-and-description {
     border-radius: 6px;
-    margin-bottom:10px;
-    overflow:hidden;
+    margin-bottom: 10px;
+    overflow: hidden;
+
     &.orange {
       border: solid orange 1.5px;
     }
@@ -476,10 +480,11 @@ export default {
     }
 
     .video-description {
-      &.topborder{
-        border-top:solid 1px rgba(204,204,204,0.3);
+      &.topborder {
+        border-top: solid 1px rgba(204, 204, 204, 0.3);
         padding: 8px 5px;
       }
+
       background: #fff;
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
@@ -593,8 +598,9 @@ export default {
       .metaViewAndData {
         display: flex;
         margin-bottom: 5px;
-        &>p{
-          margin-right:2px;
+
+        &>p {
+          margin-right: 2px;
         }
 
         .date {

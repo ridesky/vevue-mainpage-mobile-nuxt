@@ -1,8 +1,6 @@
 <template>
     <div>
-        <no-ssr>
-            <topHeaderDownload/>
-        </no-ssr>
+        <topHeaderDownload/>
         <no-ssr>
             <div class="user-vue">
                 <div class="user-info-container">

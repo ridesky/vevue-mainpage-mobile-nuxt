@@ -106,7 +106,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/app-m/release/1536548372459-2018-09-10T02:59:32.459Z/app-m.zip"
+                "S3Key": "serverless/app-m/release/1536646406640-2018-09-11T06:13:26.640Z/app-m.zip"
               },
               "FunctionName": "app-m-release-nuxt",
               "Handler": "handler.nuxt",
@@ -125,14 +125,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "NuxtLambdaVersionvRtytJzRKWeVJkH8tpoVytNHMVvgxGfhbGHs2nJOD2Q": {
+          "NuxtLambdaVersionT2w6LFw5O5lanxE8XcTSAWjNuwY5tGn3h6paxHbXfw": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "NuxtLambdaFunction"
               },
-              "CodeSha256": "ytQJTxcOfhvrCtT/ZrejqrUcEexcpLvpLGzn1R2SXg4="
+              "CodeSha256": "8ssMjgHlEkdbw3O4vVL+NQPSDiXtwXFi4vgPJ5s0gtU="
             }
           },
           "ApiGatewayRestApi": {
@@ -250,7 +250,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1536548373017": {
+          "ApiGatewayDeployment1536646407165": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -320,7 +320,7 @@
           "NuxtLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "NuxtLambdaVersionvRtytJzRKWeVJkH8tpoVytNHMVvgxGfhbGHs2nJOD2Q"
+              "Ref": "NuxtLambdaVersionT2w6LFw5O5lanxE8XcTSAWjNuwY5tGn3h6paxHbXfw"
             }
           },
           "ServiceEndpoint": {
@@ -403,7 +403,7 @@
     "artifact": "D:\\2_Project\\test\\vevue-mainpage-mobile-nuxt\\.serverless\\app-m.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/app-m/release/1536548372459-2018-09-10T02:59:32.459Z",
+    "artifactDirectoryName": "serverless/app-m/release/1536646406640-2018-09-11T06:13:26.640Z",
     "artifact": "app-m.zip"
   }
 }

@@ -8,15 +8,13 @@
                     </a>
                 </div>
                 <div class="banner-right">
-                    <div class="top-download">
+                    <!-- <div class="top-download">
                         <a href="https://app.vevue.com">Download APP</a>
-                    </div>
-                    <div class="personal" v-clickoutside='closePersonPannel' @click="showPersonPannel = !showPersonPannel">
-                        <!-- <router-link :to=" '/user/' + userInfo.userid" v-if="userInfo.avatarid"> -->
-                        <div v-if="userInfo.userid">
+                    </div> -->
+                    <div class="personal" v-clickoutside='closePersonPannel'>
+                        <div v-if="userInfo.userid" @click="showPersonPannel = !showPersonPannel">
                             <img class="topUserAvatar" :src="userInfo.avatar" alt="" :onerror='defaultAvatar'>
                         </div>
-                        <!-- </router-link> -->
                         <a v-else href="/login">
                             <img src="../assets/images/user-bg.png" class="topUserAvatar">
                         </a>
@@ -26,7 +24,11 @@
                                 <i class="iconfont icon-personal"></i>
                                 <span>My page</span>
                             </router-link>
-                            <router-link class="list list-border" to="/history">
+                            <router-link class="list list-border" :to="'/likes/'">
+                                <i class="iconfont icon-like"></i>
+                                <span>Likes</span>
+                            </router-link>
+                            <router-link class="list" to="/history">
                                 <i class="iconfont icon-history"></i>
                                 <span>History</span>
                             </router-link>
@@ -46,14 +48,10 @@
                                 <i class="el-icon-bell"></i>
                                 <span>Task</span>
                             </router-link>
-                            <router-link class="list list-border" :to="'/pin/'">
+                            <router-link class="list" :to="'/pin/'">
                                 <i class="iconfont icon-pin"></i>
                                 <span>Pin</span>
                             </router-link>
-                            <!-- <router-link class="list list-border" :to="'/task/'">
-                            <i class="iconfont icon-pin"></i>
-                            <span>Task</span>
-                        </router-link> -->
                             <router-link class="list list-border" :to="'/setting/'">
                                 <i class="iconfont icon-setting"></i>
                                 <span>Setting</span>
@@ -120,9 +118,11 @@ body {
 .el-message {
     top: 0px !important;
 }
-.please-login{
-    font-size:1.5rem!important;
+
+.please-login {
+    font-size: 1.5rem !important;
 }
+
 .header-vue-component {
     background: #fff;
     height: 55px;

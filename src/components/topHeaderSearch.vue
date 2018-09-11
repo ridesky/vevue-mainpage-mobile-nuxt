@@ -44,7 +44,7 @@
                                 <div class="title-avatar">
                                     <router-link :to=" '/video/' + video.videoid" class=" title note" v-if="video.yuan.title" :title="video.yuan.title">{{video.yuan.title}}</router-link>
                                     <div class="videoAvatarBox">
-                                        <router-link @click.native="flushCom" :to=" '/user/' + video.yuan.bywho" tanrget='_blank'>
+                                        <router-link :to=" '/user/' + video.yuan.bywho" tanrget='_blank'>
                                             <img :src="video.avatar" alt="avatar" class="videoAvatar" :onerror='defaultAvatarLogo'>
                                         </router-link>
                                     </div>
@@ -53,7 +53,7 @@
                             <!-- <div class="likesmen" v-if="video.tipslikes.length>0">
                                 <div class="tri top"></div>
                                 <i class="iconfont icon-like-heart"></i>
-                                <router-link @click.native="flushCom" :to="'/user/' + like.userid" class="likesman" v-for="(like,index) in video.tipslikes" :key='index'>{{like.nickname}}
+                                <router-link  :to="'/user/' + like.userid" class="likesman" v-for="(like,index) in video.tipslikes" :key='index'>{{like.nickname}}
                                     <span v-show="index !== video.tipslikes.length-1">,</span>
                                 </router-link>
                             </div> -->
@@ -108,20 +108,20 @@
                     </a>
                 </div>
                 <div class="top-searchbar">
-                    <el-input ref='searchinput' @input="setSearchStatus" @focus="toShowSearchPannel" size='mini' v-model="search.keyword" placeholder="Search" prefix-icon="el-icon-search">
-                        <i slot="suffix" class="el-input__icon el-icon-error" v-show="search.keyword.length >0" @click="search.keyword='';search.status=0;$refs.searchinput.focus()"></i>                        
-                    </el-input>
+                    <form action='#'>
+                        <el-input type='search' id="searchinput" ref='searchinput' @input="setSearchStatus" @focus="toShowSearchPannel" size='mini' v-model="search.keyword" placeholder="Search" prefix-icon="el-icon-search">
+                            <i slot="suffix" class="el-input__icon el-icon-error" v-show="search.keyword.length >0" @click="search.keyword='';search.status=0;$refs.searchinput.focus()"></i>
+                        </el-input>
+                    </form>
                 </div>
                 <div class="banner-right" v-if="showSwitch.searchPannel">
                     <div class="cancel" @click="hideSearchPannel">Cancel</div>
                 </div>
                 <div class="banner-right" v-else>
-                    <div class="personal" v-clickoutside='closePersonPannel' @click="showPersonPannel = !showPersonPannel">
-                        <!-- <router-link :to=" '/user/' + userInfo.userid" v-if="userInfo.avatarid"> -->
-                        <div v-if="userInfo.userid">
+                    <div class="personal" v-clickoutside='closePersonPannel'>
+                        <div v-if="userInfo.userid" @click="showPersonPannel = !showPersonPannel">
                             <img class="topUserAvatar" :src="userInfo.avatar" alt="" :onerror='defaultAvatar'>
                         </div>
-                        <!-- </router-link> -->
                         <a v-else href="/login">
                             <img src="../assets/images/user-bg.png" class="topUserAvatar">
                         </a>
@@ -131,7 +131,11 @@
                                 <i class="iconfont icon-personal"></i>
                                 <span>My page</span>
                             </router-link>
-                            <router-link class="list list-border" to="/history">
+                            <router-link class="list list-border" :to="'/likes/'">
+                                <i class="iconfont icon-like"></i>
+                                <span>Likes</span>
+                            </router-link>
+                            <router-link class="list" to="/history">
                                 <i class="iconfont icon-history"></i>
                                 <span>History</span>
                             </router-link>
@@ -151,14 +155,10 @@
                                 <i class="el-icon-bell"></i>
                                 <span>Task</span>
                             </router-link>
-                            <router-link class="list list-border" :to="'/pin/'">
+                            <router-link class="list" :to="'/pin/'">
                                 <i class="iconfont icon-pin"></i>
                                 <span>Pin</span>
                             </router-link>
-                            <!-- <router-link class="list list-border" :to="'/task/'">
-                            <i class="iconfont icon-pin"></i>
-                            <span>Task</span>
-                        </router-link> -->
                             <router-link class="list list-border" :to="'/setting/'">
                                 <i class="iconfont icon-setting"></i>
                                 <span>Setting</span>
@@ -244,7 +244,17 @@ export default {
     }
   },
   mounted() {
+    const that = this;
     window.vue = this;
+    document
+      .querySelector('#searchinput')
+      .addEventListener('keypress', function(e) {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          that.$refs.searchinput.blur();
+          that.searchVideo(that.search.keyword, false);
+        }
+      });
     this.getUserInfo();
   },
   methods: {
@@ -281,7 +291,7 @@ export default {
       document.body.classList.remove('overflowhidden');
     },
     setSearchStatus() {
-      if (this.search.keyword.length <= 0) {
+      if (this.search.keyword.trim().length <= 0) {
         this.search.status = 0;
       } else {
         this.search.status = 1;
@@ -289,6 +299,9 @@ export default {
       }
     },
     searchVideo(keyword, onlykey) {
+      if (!keyword.trim()) {
+        return;
+      }
       this.search.keyword = keyword;
       this.videos = []; // 清空之前的视频列表
       this.showSwitch.showNomore = false; // 如果之前的搜索没有结果 并且显示了 no result 图标,关闭之
@@ -740,6 +753,11 @@ body {
         .top-searchbar {
             flex: 1;
             margin: 0 1.5rem;
+            .el-input__inner{
+                // padding-top:3px!important;
+                // padding-bottom:3px!important;
+                line-height:inherit;
+            }
         }
     }
 

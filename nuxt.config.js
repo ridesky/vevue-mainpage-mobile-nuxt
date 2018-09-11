@@ -16,14 +16,17 @@ module.exports = {
         hid: 'description',
         name: 'description',
         content: 'Vevue is a P2P incentivized video network based on the Qtum blockchain. Make videos, earn tokens anywhere in the world.'
+      }, {
+        charset: 'UTF-8',
+        name: 'Vevue',
+        content: 'app-id=NMMY49G3S2.com.okchakela.Vevue'
       }
     ],
     link: [{
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: '/images/favicon.ico'
-      }
-    ]
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/images/favicon.ico'
+    }]
   },
   /*
    ** Customize the progress bar color
@@ -71,7 +74,17 @@ module.exports = {
     gzip: false
   },
   router: {
-    middleware: 'redirect'
+    middleware: 'redirect',
+    scrollBehavior: function (to, from, savedPosition) { // 滚动条记忆
+      console.log(savedPosition);
+      if (savedPosition) {
+        return savedPosition
+      }
+      return {
+        x: 0,
+        y: 0
+      }
+    }
   },
   dev: false
 }

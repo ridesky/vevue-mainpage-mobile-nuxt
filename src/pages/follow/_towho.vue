@@ -56,6 +56,7 @@ export default {
     return result;
   },
   mounted() {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     this.loadFollowers();
   },
   methods: {

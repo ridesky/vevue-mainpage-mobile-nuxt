@@ -70,9 +70,9 @@
               </div>
             </div>
             <div class="request-opt">
-              <el-button size='mini' v-if="requestObj.requesting" type="primary" disabled>Request</el-button>
-              <el-button size='mini' v-else type="primary" @click="toRequest">Request</el-button>
-              <el-button size='mini' @click='toEmptyRequest'>Cancel</el-button>
+              <el-button size='small' v-if="requestObj.requesting" type="primary" disabled>Request</el-button>
+              <el-button size='small' v-else type="primary" @click="toRequest">Request</el-button>
+              <el-button size='small' @click='toEmptyRequest'>Cancel</el-button>
             </div>
           </div>
         </div>
@@ -969,22 +969,7 @@ export default {
           requestPannelDom.style.height =
             requestContainerDom.getBoundingClientRect().height + 'px';
         }
-        /* if (
-          requestPannelDom.getBoundingClientRect().height -
-            requestAddressInfo.getBoundingClientRect().height <=
-          requestToFillDom.getBoundingClientRect().height / 2
-        ) {
-          requestPannelDom.style.height =
-            requestAddressInfo.getBoundingClientRect().height + 'px';
-        } else {
-          requestPannelDom.style.height =
-            requestContainerDom.getBoundingClientRect().height + 'px';
-        } */
       });
-      /*       let hammer = new Hammer(requestPannelDom);
-      hammer.on('panup pandown', function(e) {
-        console.log(e.type);
-      }); */
     }
   }
 };
@@ -1200,39 +1185,39 @@ export default {
       height: 65px;
       padding-top: 10px;
       padding-bottom: 10px;
-    }
 
-    .request-header {
-      font-size: 1.5rem;
+      .request-header {
+        font-size: 1.5rem;
 
-      .el-icon-close {
-        font-size: 1.6rem;
+        .el-icon-close {
+          font-size: 1.6rem;
+        }
+
+        h3 {
+          color: #409EFF;
+        }
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
-      h3 {
-        color: #409EFF;
-      }
+      .locationcache {
+        font-size: 1.3rem;
+        display: flex;
+        padding-top: 4px;
+        align-items: center;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .locationnote {
+          flex: 1;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
 
-    .locationcache {
-      font-size: 1.3rem;
-      display: flex;
-      padding-top: 4px;
-      align-items: center;
-
-      .locationnote {
-        flex: 1;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-
-      .el-icon-location-outline {
-        // color: #409EFF;
+        .el-icon-location-outline {
+          // color: #409EFF;
+        }
       }
     }
 
@@ -1245,6 +1230,10 @@ export default {
       display: flex;
       justify-content: space-around;
       align-items: center;
+
+      .el-button--small {
+        padding: 0.9rem 4.6rem;
+      }
 
       button {
         border-radius: 14px !important;

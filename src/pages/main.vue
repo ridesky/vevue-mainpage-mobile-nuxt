@@ -1,11 +1,13 @@
 <template>
-  <no-ssr>
-    <div class="main-vue">
-      <topHeaderDownload/>
-      <topmenu/>
+  <!-- <no-ssr> -->
+  <div class="main-vue">
+    <topHeaderDownload/>
+    <topmenu/>
+    <!-- <no-ssr> -->
       <videoList :listenScroll='true' :params='params'></videoList>
-    </div>
-  </no-ssr>
+    <!-- </no-ssr> -->
+  </div>
+  <!-- </no-ssr> -->
 </template>
 <script>
 import totp from '../static/tools/totp.js';
@@ -39,7 +41,7 @@ export default {
       };
     } else {
       return {
-        params: '',
+        params: {},
         old: ''
       };
     }
