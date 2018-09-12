@@ -2,14 +2,14 @@
   <no-ssr>
     <div class="history-vue">
       <div v-if="params.userid === '-'">
-        <topHeaderDownload/>
+        <topHeaderSearch/>
         <div class="please-login">
           You have not logged in yet. Please
           <a href="/login/">login</a>
         </div>
       </div>
       <div v-else>
-        <topHeaderDownload/>
+        <topHeaderSearch/>
         <topmenu/>
         <videoList :listenScroll='true' :params='params' :showWatchLater='false'></videoList>
       </div>
@@ -20,12 +20,12 @@
 import docCookies from '../static/tools/cookies';
 import videoList from '../components/videoList.vue';
 import topmenu from '../components/topMenu.vue';
-import topHeaderDownload from '../components/topHeaderDownload.vue';
+import topHeaderSearch from '../components/topHeaderSearch.vue';
 export default {
   name: 'mainVideo',
   layout: 'header',
   components: {
-    topHeaderDownload,
+    topHeaderSearch,
     videoList,
     topmenu
   },

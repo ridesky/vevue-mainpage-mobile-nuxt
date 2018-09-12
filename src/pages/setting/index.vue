@@ -1,15 +1,15 @@
 <template>
   <div>
-    <topHeaderDownload/>
+    <topHeaderSearch/>
     <setinfo/>
   </div>
 </template>
 <script>
 import setinfo from '../../components/setInfo.vue';
-import topHeaderDownload from '../../components/topHeaderDownload.vue';
+import topHeaderSearch from '../../components/topHeaderSearch.vue';
 export default {
   components: {
-    topHeaderDownload,
+    topHeaderSearch,
     setinfo
   },
   layout: 'header'

@@ -1,6 +1,6 @@
 <template>
   <no-ssr>
-    <div class="history-vue">
+    <div class="focus-vue">
       <div v-if="params.userid === '-'">
         <topHeaderSearch/>
         <div class="please-login">
@@ -12,7 +12,8 @@
         <topHeaderSearch/>
         <!-- <topHeaderDownload/> -->
         <!-- <topmenu/> -->
-        <videoList :listenScroll='true' :params='params' :showWatchLater='true' :showRecommend='true' style="margin-top:55px;"></videoList>
+        <!-- style="margin-top:55px;" -->
+        <videoList :listenScroll='true' :params='params' :showWatchLater='true' :showRecommend='true'></videoList>
       </div>
     </div>
   </no-ssr>
@@ -52,6 +53,11 @@ export default {
 };
 </script>
 <style lang="stylus">
+.focus-vue {
+  // position: relative;
+  // min-height:100vh;
+}
+
 .please-login {
   text-align: center;
   color: #333;

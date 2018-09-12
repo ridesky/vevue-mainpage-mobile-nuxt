@@ -1,6 +1,7 @@
 <template>
   <div class="pin-vue">
-    <topHeaderDownload/>
+    <!-- <topHeaderDownload/> -->
+    <topHeaderSearch :downloadBar='false'/>
     <div class="textFileWrapper" v-show="!taskMarker">
       <input type="text" id='searchTextField' class="controls searchTextField" placeholder="Search address">
     </div>
@@ -148,10 +149,12 @@ import docCookies from '../../static/tools/cookies.js';
 import totp from '../../static/tools/totp.js';
 import SparkMD5 from 'spark-md5';
 import topHeaderDownload from '../../components/topHeaderDownload.vue';
+import topHeaderSearch from '../../components/topHeaderSearch.vue';
 export default {
   name: 'pin',
   layout: 'header',
   components: {
+    topHeaderSearch,
     topHeaderDownload
   },
   data() {
@@ -439,8 +442,8 @@ export default {
       });
       if (navigator.geolocation) {
         // !!! 记得修改回来
-        map.setCenter(uluru);
-        // that.locationPlace(map, that.locationMarker);
+        // map.setCenter(uluru);
+        that.locationPlace(map, that.locationMarker);
       } else {
         map.setCenter(uluru);
       }

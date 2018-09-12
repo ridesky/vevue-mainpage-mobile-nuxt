@@ -1,6 +1,6 @@
 <template>
     <div class="task-vue">
-        <topHeaderDownload/>
+        <topHeaderSearch/>
         <ul class="tasks-ul">
             <li class="tasks-li" v-for="item in votelist" :key="item.voteid">
                 <div class="general">
@@ -49,13 +49,13 @@ import apiUrl from '../assets/js/config/urlConfig.js';
 import docCookies from '../static/tools/cookies.js';
 import totp from '../static/tools/totp.js';
 import jsFormat from '../static/tools/jsFormat.js';
-import topHeaderDownload from '../components/topHeaderDownload.vue';
+import topHeaderSearch from '../components/topHeaderSearch.vue';
 let globalVotelist = null;
 export default {
   name: 'task',
   layout: 'header',
   components: {
-    topHeaderDownload
+    topHeaderSearch
   },
   data() {
     return {

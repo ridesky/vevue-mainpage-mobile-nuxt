@@ -1,6 +1,6 @@
 <template>
     <div>
-        <topHeaderDownload/>
+        <topHeaderSearch/>
         <no-ssr>
             <div class="user-vue">
                 <div class="user-info-container">
@@ -104,7 +104,7 @@ import ClipboardJS from 'clipboard';
 import jsFormat from '../../static/tools/jsFormat.js';
 import totp from '../../static/tools/totp.js';
 import videoList from '../../components/videoList.vue';
-import topHeaderDownload from '../../components/topHeaderDownload.vue';
+import topHeaderSearch from '../../components/topHeaderSearch.vue';
 if (process.browser) {
   require('../../static/tools/qrcode.min.js');
 }
@@ -112,7 +112,7 @@ let globalUserInfoCache = {};
 let globalUserid = '';
 export default {
   components: {
-    topHeaderDownload,
+    topHeaderSearch,
     videoList
   },
   layout: 'header',

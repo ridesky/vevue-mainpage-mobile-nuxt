@@ -1,63 +1,79 @@
 <template>
     <div>
-        <div class="search-pannel" v-show="showSwitch.searchPannel">
-            <!-- 搜索框里没有值的时候 显示热门列表和历史纪录 -->
-            <div class="hot-detail" v-show="search.status === 0">
-                <div class="trending" v-if="hotkey.length>0">
-                    <h3>Trending</h3>
-                    <div @click="searchVideo(item,false)" class="hotkeytag" size="small" type="info" v-for="(item,index) in hotkey" :key="index">{{item}}</div>
-                </div>
-                <div class="history" v-if="search.history.length>0">
-                    <h3>History</h3>
-                    <div v-for="(item,index) in search.history" :key="index" class="history-item">
-                        <i class="el-icon-time" @click="searchVideo(item,false)"></i>
-                        <p class="item-text" @click="searchVideo(item,false)">{{item}}</p>
-                        <i class="el-icon-close" @click="removeSearchHistory(index)"></i>
-                    </div>
-                    <div class="cleanhistory" v-if='search.history.length>=5' @click="removeSearchHistory()">
-                        <i class="el-icon-delete"></i>
-                        <p>Clean search history</p>
-                    </div>
+        <div class="app-download-bar" v-show="showSwitch.downloadBar">
+            <div class="left-item">
+                <i class="close-wrapper iconfont icon-del" @click="showSwitch.downloadBar = false"></i>
+                <img src="../static/images/favicon.png" alt="Vevue">
+                <div class="desc-wrapper">
+                    Download App
                 </div>
             </div>
-            <!-- 搜索框里有值的时候  显示关键词联想 -->
-            <div class="search-keylist" v-show="search.status === 1">
-                <div v-for="(item,index) in search.keylist" :key="index" class="keylist-item" @click="searchVideo(item,false)">
-                    <i class="el-icon-search"></i>
-                    <p>{{item}}</p>
-                </div>
-                <div class="keylist-item searchall" @click="searchVideo(search.keyword,false)">View 「{{search.keyword}}」 results</div>
+            <div class="right-item">
+                <el-button type="primary" size="small">
+                    <a href="https://app.vevue.com/" target="_blank">Install</a>
+                </el-button>
             </div>
-            <!-- 显示搜索后的结果 -->
-            <div class="search-result" v-show="search.status === 2">
-                <div v-show="!showSwitch.hideLoading" class="load" :class="{center:videos.length === 0}">
-                    <img src="../assets/images/loading_bar.gif" alt="">
-                </div>
-                <ul class="videoLists scrollload-content">
-                    <li class="videoList" v-for="(video,index) in videos" :key="index">
-                        <div class="videoItem">
-                            <div class="videoCoverBox" :class="{orange:0<video.price&&video.price<=70,purple:video.price>70}">
-                                <router-link :to=" '/video/' + video.videoid" :title="video.yuan.note || video.yuan.title" class="image-box">
-                                    <img :src="video.coverURL" alt="" class="videoPoster posterImage" :onerror='defaultCoverLogo'>
-                                </router-link>
-                                <div class="video_time" v-if="video.video_time">{{jsFormat.sec_to_time(video.video_time)}}</div>
-                                <div class="title-avatar">
-                                    <router-link :to=" '/video/' + video.videoid" class=" title note" v-if="video.yuan.title" :title="video.yuan.title">{{video.yuan.title}}</router-link>
-                                    <div class="videoAvatarBox">
-                                        <router-link :to=" '/user/' + video.yuan.bywho" tanrget='_blank'>
-                                            <img :src="video.avatar" alt="avatar" class="videoAvatar" :onerror='defaultAvatarLogo'>
-                                        </router-link>
-                                    </div>
-                                </div>
+        </div>
+        <div class="stop-penetrate">
+            <no-ssr>
+                <div class="search-pannel" v-show="showSwitch.searchPannel">
+                    <!-- 搜索框里没有值的时候 显示热门列表和历史纪录 -->
+                    <div class="hot-detail" v-show="search.status === 0">
+                        <div class="trending" v-if="hotkey.length>0">
+                            <h3>Trending</h3>
+                            <div @click="searchVideo(item,false)" class="hotkeytag" size="small" type="info" v-for="(item,index) in hotkey" :key="index">{{item}}</div>
+                        </div>
+                        <div class="history" v-if="search.history.length>0">
+                            <h3>History</h3>
+                            <div v-for="(item,index) in search.history" :key="index" class="history-item">
+                                <i class="el-icon-time" @click="searchVideo(item,false)"></i>
+                                <p class="item-text" @click="searchVideo(item,false)">{{item}}</p>
+                                <i class="el-icon-close" @click="removeSearchHistory(index)"></i>
                             </div>
-                            <!-- <div class="likesmen" v-if="video.tipslikes.length>0">
+                            <div class="cleanhistory" v-if='search.history.length>=5' @click="removeSearchHistory()">
+                                <i class="el-icon-delete"></i>
+                                <p>Clean search history</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 搜索框里有值的时候  显示关键词联想 -->
+                    <div class="search-keylist" v-show="search.status === 1">
+                        <div v-for="(item,index) in search.keylist" :key="index" class="keylist-item" @click="searchVideo(item,false)">
+                            <i class="el-icon-search"></i>
+                            <p>{{item}}</p>
+                        </div>
+                        <div class="keylist-item searchall" @click="searchVideo(search.keyword,false)">View 「{{search.keyword}}」 results</div>
+                    </div>
+                    <!-- 显示搜索后的结果 -->
+                    <div class="search-result" v-show="search.status === 2">
+                        <div v-show="!showSwitch.hideLoading" class="load" :class="{center:videos.length === 0}">
+                            <img src="../assets/images/loading_bar.gif" alt="">
+                        </div>
+                        <ul class="videoLists scrollload-content">
+                            <li class="videoList" v-for="(video,index) in videos" :key="index">
+                                <div class="videoItem">
+                                    <div class="videoCoverBox" :class="{orange:0<video.price&&video.price<=70,purple:video.price>70}">
+                                        <router-link :to=" '/video/' + video.videoid" :title="video.yuan.note || video.yuan.title" class="image-box">
+                                            <img :src="video.coverURL" alt="" class="videoPoster posterImage" :onerror='defaultCoverLogo'>
+                                        </router-link>
+                                        <div class="video_time" v-if="video.video_time">{{jsFormat.sec_to_time(video.video_time)}}</div>
+                                        <div class="title-avatar">
+                                            <router-link :to=" '/video/' + video.videoid" class=" title note" v-if="video.yuan.title" :title="video.yuan.title">{{video.yuan.title}}</router-link>
+                                            <div class="videoAvatarBox">
+                                                <router-link :to=" '/user/' + video.yuan.bywho" tanrget='_blank'>
+                                                    <img :src="video.avatar" alt="avatar" class="videoAvatar" :onerror='defaultAvatarLogo'>
+                                                </router-link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="likesmen" v-if="video.tipslikes.length>0">
                                 <div class="tri top"></div>
                                 <i class="iconfont icon-like-heart"></i>
                                 <router-link  :to="'/user/' + like.userid" class="likesman" v-for="(like,index) in video.tipslikes" :key='index'>{{like.nickname}}
                                     <span v-show="index !== video.tipslikes.length-1">,</span>
                                 </router-link>
                             </div> -->
-                            <!-- <div class="flex videoMeta-wrapper">
+                                    <!-- <div class="flex videoMeta-wrapper">
                                 <div class="videoMeta">
                                     <p class="nickname">@{{video.yuan.nickname}} </p>
                                     <p v-if="video.copyright_status !='NO'">BlockNumber: {{video.copyright_blocknumber}}<br/> Copyright ID {{video.copyright_id}}</p>
@@ -85,97 +101,99 @@
                                     </ul>
                                 </div>
                             </div> -->
-                        </div>
-                        <div class="videoSummary">
-                            <h3 class="videoTitle">{{video.title}}</h3>
-                            <div class="metainfo">
-                                <span>{{video.viewers}}</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="nomore" v-if="showSwitch.showNomore">
-                    <i class="iconfont icon-nomore"></i>
-                    <p>No result</p>
-                </div>
-            </div>
-        </div>
-        <header class="header-search-vue-component">
-            <div class="top-banner">
-                <div class="logoBox">
-                    <a href="/">
-                        <img src="../static/images/favicon.png" alt="">
-                    </a>
-                </div>
-                <div class="top-searchbar">
-                    <form action='#'>
-                        <el-input type='search' id="searchinput" ref='searchinput' @input="setSearchStatus" @focus="toShowSearchPannel" size='mini' v-model="search.keyword" placeholder="Search" prefix-icon="el-icon-search">
-                            <i slot="suffix" class="el-input__icon el-icon-error" v-show="search.keyword.length >0" @click="search.keyword='';search.status=0;$refs.searchinput.focus()"></i>
-                        </el-input>
-                    </form>
-                </div>
-                <div class="banner-right" v-if="showSwitch.searchPannel">
-                    <div class="cancel" @click="hideSearchPannel">Cancel</div>
-                </div>
-                <div class="banner-right" v-else>
-                    <div class="personal" v-clickoutside='closePersonPannel'>
-                        <div v-if="userInfo.userid" @click="showPersonPannel = !showPersonPannel">
-                            <img class="topUserAvatar" :src="userInfo.avatar" alt="" :onerror='defaultAvatar'>
-                        </div>
-                        <a v-else href="/login">
-                            <img src="../assets/images/user-bg.png" class="topUserAvatar">
-                        </a>
-                        <div class="person-pannel" v-show="showPersonPannel">
-                            <div class="tri"></div>
-                            <router-link class="list" :to="'/user/' + userInfo.userid +'/works'">
-                                <i class="iconfont icon-personal"></i>
-                                <span>My page</span>
-                            </router-link>
-                            <router-link class="list list-border" :to="'/likes/'">
-                                <i class="iconfont icon-like"></i>
-                                <span>Likes</span>
-                            </router-link>
-                            <router-link class="list" to="/history">
-                                <i class="iconfont icon-history"></i>
-                                <span>History</span>
-                            </router-link>
-                            <router-link class="list" to="/unlock">
-                                <i class="iconfont icon-unlock"></i>
-                                <span>Unlock</span>
-                            </router-link>
-                            <router-link class="list" to="/playlist">
-                                <i class="iconfont icon-watch_later"></i>
-                                <span>Watch Later</span>
-                            </router-link>
-                            <router-link class="list list-border" :to="'/message/'">
-                                <i class="el-icon-message"></i>
-                                <span>Message</span>
-                            </router-link>
-                            <router-link class="list list-border" :to="'/task/'">
-                                <i class="el-icon-bell"></i>
-                                <span>Task</span>
-                            </router-link>
-                            <router-link class="list" :to="'/pin/'">
-                                <i class="iconfont icon-pin"></i>
-                                <span>Pin</span>
-                            </router-link>
-                            <router-link class="list list-border" :to="'/setting/'">
-                                <i class="iconfont icon-setting"></i>
-                                <span>Setting</span>
-                            </router-link>
-                            <a class="list" @click="toLogout">
-                                <div class="personal">
-                                    <i class="iconfont icon-logout" v-if="userInfo" title="Log out" style="cursor:pointer"></i>
-                                    <span @click="toLogout">Sign out</span>
-                                    <div class="userSetting">
+                                </div>
+                                <div class="videoSummary">
+                                    <h3 class="videoTitle">{{video.title}}</h3>
+                                    <div class="metainfo">
+                                        <span>{{video.viewers}}</span>
                                     </div>
                                 </div>
-                            </a>
+                            </li>
+                        </ul>
+                        <div class="nomore" v-if="showSwitch.showNomore">
+                            <i class="iconfont icon-nomore"></i>
+                            <p>No result</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </no-ssr>
+            <header class="header-search-vue-component">
+                <div class="top-banner">
+                    <div class="logoBox">
+                        <a href="/">
+                            <img src="../static/images/favicon.png" alt="">
+                        </a>
+                    </div>
+                    <div class="top-searchbar">
+                        <form action='#'>
+                            <el-input type='search' id="searchinput" ref='searchinput' @input="setSearchStatus" @focus="toShowSearchPannel" size='mini' v-model="search.keyword" placeholder="Search" prefix-icon="el-icon-search">
+                                <i slot="suffix" class="el-input__icon el-icon-error" v-show="search.keyword.length >0" @click="search.keyword='';search.status=0;$refs.searchinput.focus()"></i>
+                            </el-input>
+                        </form>
+                    </div>
+                    <div class="banner-right" v-if="showSwitch.searchPannel">
+                        <div class="cancel" @click="hideSearchPannel">Cancel</div>
+                    </div>
+                    <div class="banner-right" v-else>
+                        <div class="personal" v-clickoutside='closePersonPannel'>
+                            <div v-if="userInfo.userid" @click="showPersonPannel = !showPersonPannel">
+                                <img class="topUserAvatar" :src="userInfo.avatar" alt="" :onerror='defaultAvatar'>
+                            </div>
+                            <a v-else href="/login">
+                                <img src="../assets/images/user-bg.png" class="topUserAvatar">
+                            </a>
+                            <div class="person-pannel" v-show="showPersonPannel">
+                                <div class="tri"></div>
+                                <router-link class="list" :to="'/user/' + userInfo.userid +'/works'">
+                                    <i class="iconfont icon-personal"></i>
+                                    <span>My page</span>
+                                </router-link>
+                                <router-link class="list list-border" :to="'/likes/'">
+                                    <i class="iconfont icon-like"></i>
+                                    <span>Likes</span>
+                                </router-link>
+                                <router-link class="list" to="/history">
+                                    <i class="iconfont icon-history"></i>
+                                    <span>History</span>
+                                </router-link>
+                                <router-link class="list" to="/unlock">
+                                    <i class="iconfont icon-unlock"></i>
+                                    <span>Unlock</span>
+                                </router-link>
+                                <router-link class="list" to="/playlist">
+                                    <i class="iconfont icon-watch_later"></i>
+                                    <span>Watch Later</span>
+                                </router-link>
+                                <router-link class="list list-border" :to="'/message/'">
+                                    <i class="el-icon-message"></i>
+                                    <span>Message</span>
+                                </router-link>
+                                <router-link class="list list-border" :to="'/task/'">
+                                    <i class="el-icon-bell"></i>
+                                    <span>Task</span>
+                                </router-link>
+                                <router-link class="list" :to="'/pin/'">
+                                    <i class="iconfont icon-pin"></i>
+                                    <span>Pin</span>
+                                </router-link>
+                                <router-link class="list list-border" :to="'/setting/'">
+                                    <i class="iconfont icon-setting"></i>
+                                    <span>Setting</span>
+                                </router-link>
+                                <a class="list" @click="toLogout">
+                                    <div class="personal">
+                                        <i class="iconfont icon-logout" v-if="userInfo" title="Log out" style="cursor:pointer"></i>
+                                        <span @click="toLogout">Sign out</span>
+                                        <div class="userSetting">
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
     </div>
 </template>
 <script>
@@ -187,6 +205,14 @@ import totp from '../static/tools/totp.js';
 import jsFormat from '../static/tools/jsFormat.js';
 // import
 export default {
+  props: {
+    downloadBar: {
+      // 是否监听触底事件,进行加载新视频
+      type: Boolean,
+      required: false,
+      default: true
+    }
+  },
   data() {
     const that = this;
     return {
@@ -205,6 +231,7 @@ export default {
           : []
       },
       showSwitch: {
+        downloadBar: that.downloadBar,
         searchPannel: false,
         showNomore: false,
         hideLoading: true
@@ -221,24 +248,26 @@ export default {
   },
   computed: {
     hotkey() {
-      if (this.$store.state.hotkey.length === 0) {
-        axios
-          .post(apiUrl.vevueAPI + 'listoffocus', {
-            userid: docCookies.getItem('userid') || '-',
-            towho: docCookies.getItem('userid') || '-',
-            authcode: docCookies.getItem('userid')
-              ? totp.getCode(docCookies.getItem('safekey'))
-              : '',
-            cid: docCookies.getItem('cid') || '',
-            type: 'listoffocus',
-            offset: 0,
-            timestamp: Math.floor(new Date().getTime() / 1000)
-          })
-          .then(res => {
-            if (res.data.errcode === 0) {
-              this.$store.commit('sethotkey', res.data.hotkey || []);
-            }
-          });
+      if (process.client) {
+        if (this.$store.state.hotkey.length === 0) {
+          axios
+            .post(apiUrl.vevueAPI + 'hotkeylist', {
+              userid: docCookies.getItem('userid') || '-',
+              towho: docCookies.getItem('userid') || '-',
+              authcode: docCookies.getItem('userid')
+                ? totp.getCode(docCookies.getItem('safekey'))
+                : '',
+              cid: docCookies.getItem('cid') || '',
+              type: 'hotkeylist',
+              offset: 0,
+              timestamp: Math.floor(new Date().getTime() / 1000)
+            })
+            .then(res => {
+              if (res.data.errcode === 0) {
+                this.$store.commit('sethotkey', res.data.hotkey || []);
+              }
+            });
+        }
       }
       return this.$store.state.hotkey;
     }
@@ -250,6 +279,7 @@ export default {
       .querySelector('#searchinput')
       .addEventListener('keypress', function(e) {
         if (e.keyCode === 13) {
+          //   alert('13');
           e.preventDefault();
           that.$refs.searchinput.blur();
           that.searchVideo(that.search.keyword, false);
@@ -411,13 +441,48 @@ body {
     background: #f5f5f5;
 }
 
+.app-download-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 8px;
+
+    .left-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &>* {
+            margin: 0 5px;
+        }
+
+        img {
+            display: block;
+            width: 40px;
+            background: #fff;
+            padding: 6px 2px;
+            border-radius: 4px;
+        }
+    }
+}
+
+.stop-penetrate {
+    position: relative;
+}
+
 .overflowhidden {
+    .body-want-hideme {
+        display: none;
+    }
+
     overflow: hidden !important;
 }
 
 .search-pannel {
     // border-top: solid 1px #ccc;
-    position: fixed;
+    // position: fixed;
+    position: absolute;
+    min-height: 100vh;
     background: #f6f6f6;
     z-index: 9999;
     width: 100%;
@@ -454,7 +519,7 @@ body {
         margin: auto;
 
         &.center {
-            position: absolute;
+            position: fixed;
             left: 50%;
             top: 50%;
             transform: translateX(-50%) translateY(-50%);
@@ -466,22 +531,21 @@ body {
         }
     }
 
-    .nomore {
-        text-align: center;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%);
+    // .nomore {
+    // text-align: center;
+    // position: fixed;
+    // left: 50%;
+    // top: 40px;
+    // // transform: translateX(-50%) translateY(-50%);
 
-        .iconfont {
-            font-size: 40px;
-        }
+    // .iconfont {
+    // font-size: 40px;
+    // }
 
-        p {
-            font-size: 20px;
-        }
-    }
-
+    // p {
+    // font-size: 20px;
+    // }
+    // }
     .hot-detail {
         .history {
             h3 {
@@ -552,8 +616,8 @@ body {
         &.center {
             position: absolute;
             left: 50%;
-            top: 50%;
-            transform: translateX(-50%) translateY(-50%);
+            top: 50px;
+            transform: translateX(-50%);
         }
 
         img {
@@ -566,8 +630,8 @@ body {
         text-align: center;
         position: absolute;
         left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%);
+        top: 50px;
+        transform: translateX(-50%);
 
         .iconfont {
             font-size: 40px;
@@ -732,7 +796,7 @@ body {
 }
 
 .header-search-vue-component {
-    position: fixed;
+    // position: fixed;
     width: 100%;
     top: 0px;
     z-index: 999;
@@ -753,10 +817,11 @@ body {
         .top-searchbar {
             flex: 1;
             margin: 0 1.5rem;
-            .el-input__inner{
+
+            .el-input__inner {
                 // padding-top:3px!important;
                 // padding-bottom:3px!important;
-                line-height:inherit;
+                line-height: inherit;
             }
         }
     }

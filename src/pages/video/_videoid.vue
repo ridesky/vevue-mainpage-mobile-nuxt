@@ -223,7 +223,7 @@ export default {
     return {
       apiUrl,
       avatar: '', // 用户头像地址
-      rightComment:'',
+      rightComment: '',
       commentPack: {
         showLoading: false,
         commentText: ''
@@ -236,7 +236,6 @@ export default {
       tobuydialog: false,
       showPaytoPlay: false,
       videoNoExit: false, // 视频不存在
-      videoUrl: '', // 视频地址
       videoUrl_real: '', // 收费视频地址
       subtitle: [], // 字幕
       vrMode: false,
@@ -400,7 +399,6 @@ export default {
       userid: docCookies.getItem('userid') || '',
       nickname: docCookies.getItem('nickname') || 'User',
       hashUrl: encodeURIComponent(window.location.href),
-      videoUrl: this.$route.params.videoid.split('::')[0],
       avatar: docCookies.getItem('avatar') // 初始化avatar
         ? apiUrl.avatarURL + docCookies.getItem('avatar') + '.jpg'
         : 'https://file.vevue.com/avatar/vevue_logo_1000.jpg',
@@ -674,7 +672,7 @@ export default {
               that.vrView = new VRView.Player('#vrview', {
                 video:
                   apiUrl.videoURL +
-                  (that.videoUrl_real || that.videoUrl) +
+                  (that.videoUrl_real || res.data.result.yuan.videoid) +
                   '.mp4',
                 width: vrWidth,
                 height: vrHeight
@@ -855,6 +853,7 @@ export default {
                   : 'video/mp4'
             }
           ],
+          poster: apiUrl.videoURL + that.video.videoid + '.jpg',
           controls: true,
           autoplay: false
           // textTrackSettings: true
@@ -1272,9 +1271,11 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .flex1{
-      overflow:hidden;
+
+    .flex1 {
+      overflow: hidden;
     }
+
     &.op1 {
       opacity: 1;
     }

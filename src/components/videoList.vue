@@ -1,5 +1,5 @@
 <template>
-  <div class="videoList-vue">
+  <div class="videoList-vue body-want-hideme">
     <div class="swiper-container" v-show="showRecommend">
       <ul class="recommend swiper-wrapper">
         <li v-for="item in recommend" :key="item.userid" class="swiper-slide">
@@ -62,7 +62,7 @@
             </div>
             <div class="video-meta-menu iconfont icon-menu_col" :class="{'stay':showMetaMenuIndex === index}" v-on:click="toShowMetaMenuIndex(index)">
               <ul class="meta-sel">
-                <li class="sel" @click="clipAddress('.clipBtn'+index)" :class="'clipBtn'+index" :aria-label='location.origin+"/#/video/"+video.videoid'>
+                <li class="sel" @click="clipAddress('.clipBtn'+index)" :class="'clipBtn'+index" :aria-label='location.origin+"/video/"+video.videoid'>
                   Copy Link
                 </li>
                 <li class="sel" v-if="showRemoveHistory" @click="toRemoveHistory(video.videoid,index,0)">

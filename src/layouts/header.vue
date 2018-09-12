@@ -1,17 +1,5 @@
 <template>
   <div>
-    <div class="app-download-bar">
-      <div class="left-item">
-        <i class="close-wrapper iconfont icon-del"></i>
-        <img src="../static/images/favicon.png" alt="Vevue">
-        <div class="desc-wrapper">
-          Download App
-        </div>
-      </div>
-      <div class="right-item">
-        <el-button type="primary" size="small">Install</el-button>
-      </div>
-    </div>
     <nuxt keep-alive />
     <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyD6Zh2AjPRc9CN7qMLKUxAHxBw_M57RbwU&libraries=places,geometry"></script>
     <script src="//developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
@@ -46,6 +34,13 @@ export default {
           href: '//cdn.bootcss.com/Swiper/4.1.6/css/swiper.min.css'
         }
       ]
+    };
+  },
+  data() {
+    return {
+      showSwitch: {
+        downloadBar: true
+      }
     };
   }
   // head() {
@@ -86,18 +81,22 @@ export default {
 };
 </script>
 <style lang="stylus">
+
 .app-download-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px 8px;
+
   .left-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    &>*{
+
+    &>* {
       margin: 0 5px;
     }
+
     img {
       display: block;
       width: 40px;

@@ -35,6 +35,14 @@ object {
   box-sizing: border-box;
 }
 
+input[type="search"] {
+  -webkit-appearance: none;
+}
+
+input::-webkit-search-cancel-button {
+  display: none;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;

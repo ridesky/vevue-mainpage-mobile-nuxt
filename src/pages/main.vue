@@ -1,10 +1,12 @@
 <template>
   <!-- <no-ssr> -->
   <div class="main-vue">
-    <topHeaderDownload/>
+    <no-ssr>
+      <topHeaderSearch/>
+    </no-ssr>
     <topmenu/>
     <!-- <no-ssr> -->
-      <videoList :listenScroll='true' :params='params'></videoList>
+    <videoList :listenScroll='true' :params='params'></videoList>
     <!-- </no-ssr> -->
   </div>
   <!-- </no-ssr> -->
@@ -14,12 +16,14 @@ import totp from '../static/tools/totp.js';
 import docCookies from '../static/tools/cookies.js';
 import videoList from '../components/videoList.vue';
 import topmenu from '../components/topMenu.vue';
-import topHeaderDownload from '../components/topHeaderDownload.vue';
+// import topHeaderDownload from '../components/topHeaderDownload.vue';
+import topHeaderSearch from '../components/topHeaderSearch.vue';
 export default {
   name: 'mainVideo',
   layout: 'header',
   components: {
-    topHeaderDownload,
+    // topHeaderDownload,
+    topHeaderSearch,
     topmenu,
     videoList
   },
