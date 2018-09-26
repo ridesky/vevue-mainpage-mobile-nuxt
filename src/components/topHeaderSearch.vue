@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- !!! 暂时隐藏此安装按钮 -->
         <div class="app-download-bar" v-show="showSwitch.downloadBar">
             <div class="left-item">
                 <i class="close-wrapper iconfont icon-del" @click="showSwitch.downloadBar = false"></i>
@@ -210,7 +211,7 @@ export default {
       // 是否监听触底事件,进行加载新视频
       type: Boolean,
       required: false,
-      default: true
+      default: false
     }
   },
   data() {
@@ -220,6 +221,7 @@ export default {
       jsFormat,
       cookiesEnd: 604800, // cookies时间
       videos: [],
+      selfPath: '', // 为了给子组件存储当前父组件所处于的路由命名
       search: {
         keyword: '',
         status: 0,
@@ -275,6 +277,13 @@ export default {
   mounted() {
     const that = this;
     window.vue = this;
+    try {
+      that.selfPath = that.$route.matched[0].path;
+    } catch (error) {
+      that.selfPath = that.$route.pach;
+    }
+    this.judegCurrentRoute();
+    // this.$on('toHideSearchPannel',this.hideSearchPannel);
     document
       .querySelector('#searchinput')
       .addEventListener('keypress', function(e) {
@@ -287,7 +296,26 @@ export default {
       });
     this.getUserInfo();
   },
+  watch: {
+    $route: function(to, from) {
+      console.log(this.$route.matched[0].path);
+      console.log(this.selfPath);
+      this.judegCurrentRoute();
+    }
+  },
   methods: {
+    judegAgent() {
+      var sUserAgent = navigator.userAgent;
+    },
+    judegCurrentRoute() {
+      if (this.$route.matched[0].path === this.selfPath) {
+        if (this.showSwitch.searchPannel) {
+          document.body.classList.add('overflowhidden');
+        } else {
+          document.body.classList.remove('overflowhidden');
+        }
+      }
+    },
     removeSearchHistory(index) {
       if (index >= 0) {
         this.search.history.splice(index, 1);
@@ -446,6 +474,13 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 5px 8px;
+    position: fixed;
+    width: 100%;
+    z-index: 6;
+    color: #fff;
+    // background: rgba(247, 152, 51, 0.9);
+    background: rgba(128, 128, 128, 0.85);
+    bottom: 0px;
 
     .left-item {
         display: flex;
@@ -458,10 +493,10 @@ body {
 
         img {
             display: block;
-            width: 40px;
+            width: 36px;
             background: #fff;
             padding: 6px 2px;
-            border-radius: 4px;
+            border-radius: 8px;
         }
     }
 }

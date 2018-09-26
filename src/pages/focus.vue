@@ -9,7 +9,7 @@
         </div>
       </div>
       <div v-else>
-        <topHeaderSearch/>
+        <topHeaderSearch ref="topHeaderSearch"/>
         <!-- <topHeaderDownload/> -->
         <!-- <topmenu/> -->
         <!-- style="margin-top:55px;" -->
@@ -49,7 +49,11 @@ export default {
       });
     }
     return result;
-  }
+  },
+  // beforeRouteLeave (to, from, next) {
+  //   this.$refs.topHeaderSearch.$emit('toHideSearchPannel');
+  //   next();
+  // }
 };
 </script>
 <style lang="stylus">

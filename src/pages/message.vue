@@ -16,7 +16,7 @@
                     <div v-if="item.type == 0">
                         <div class="info-head">
                             <router-link :to="'/user/' + item.bywho ">
-                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar">
+                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar"  :onerror='defaultAvatar'>
                             </router-link>
                             <div class="user-meta">
                                 <p>{{item.nickname}}</p>
@@ -38,7 +38,7 @@
                     <div v-else-if="item.type == 1">
                         <div class="info-head">
                             <router-link :to="'/user/' + item.bywho ">
-                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar">
+                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar" :onerror='defaultAvatar'>
                             </router-link>
                             <div class="user-meta">
                                 <p>{{item.nickname}}</p>
@@ -60,7 +60,7 @@
                     <div v-else-if="item.type ==2">
                         <div class="info-head">
                             <router-link :to="'/user/' + item.bywho ">
-                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar">
+                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar" :onerror='defaultAvatar'>
                             </router-link>
                             <div class="user-meta">
                                 <p>{{item.nickname}}</p>
@@ -85,7 +85,7 @@
                     <div v-else-if="item.type ==5 ">
                         <div class="info-head">
                             <router-link :to="'/user/' + item.bywho ">
-                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar">
+                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar" :onerror='defaultAvatar'>
                             </router-link>
                             <div class="user-meta">
                                 <p>{{item.nickname}}</p>
@@ -111,7 +111,7 @@
                     <div v-else-if="item.type == 7">
                         <div class="info-head">
                             <router-link :to="'/user/' + item.bywho ">
-                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar">
+                                <img :src="apiUrl.avatarURL + item.avatar + '.jpg'" alt="avatar" class="avatar" :onerror='defaultAvatar'>
                             </router-link>
                             <div class="user-meta">
                                 <p>{{item.nickname}}</p>
@@ -175,6 +175,8 @@ export default {
     return {
       apiUrl,
       jsFormat,
+      defaultAvatar:
+        'this.src="' + require('../assets/images/vevue_logo_50x50.png') + '"',
       defaultCoverLogo:
         'this.src="' + require('../assets/images/default_cover.png') + '"',
       showSwitch: {

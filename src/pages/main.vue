@@ -2,7 +2,7 @@
   <!-- <no-ssr> -->
   <div class="main-vue">
     <no-ssr>
-      <topHeaderSearch/>
+      <topHeaderSearch :downloadBar='true'/>
     </no-ssr>
     <topmenu/>
     <!-- <no-ssr> -->

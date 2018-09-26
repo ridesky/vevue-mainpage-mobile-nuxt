@@ -327,13 +327,13 @@ export default {
     result = result.data;
     if (result.errcode === 0) {
       return {
-        videoSeoID: context.params.videoid,
+        videoLink: result.link,
         videoSeoTitle: result.title,
         videoSeoNote: result.note
       };
     } else {
       return {
-        videoSeoID: context.params.videoid,
+        videoLink: context.params.videoid,
         videoSeoTitle: 'Vevue',
         videoSeoNote: 'Vevue'
       };
@@ -363,11 +363,11 @@ export default {
         },
         {
           property: 'og:site_name',
-          content: 'Vevue Og site name'
+          content: 'Vevue'
         },
         {
           property: 'og:image',
-          content: this.apiUrl.videoURL + this.videoSeoID + '.jpg'
+          content: this.apiUrl.videoURL + this.videoLink + '.jpg'
         },
         {
           property: 'og:width',
@@ -672,7 +672,8 @@ export default {
               that.vrView = new VRView.Player('#vrview', {
                 video:
                   apiUrl.videoURL +
-                  (that.videoUrl_real || res.data.result.yuan.videoid) +
+                  (that.videoUrl_real ||
+                    res.data.result.yuan.videoid.split('::main')[0]) +
                   '.mp4',
                 width: vrWidth,
                 height: vrHeight
@@ -853,7 +854,8 @@ export default {
                   : 'video/mp4'
             }
           ],
-          poster: apiUrl.videoURL + that.video.videoid + '.jpg',
+          poster:
+            apiUrl.videoURL + that.video.videoid.split('::main')[0] + '.jpg',
           controls: true,
           autoplay: false
           // textTrackSettings: true

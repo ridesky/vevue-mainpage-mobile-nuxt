@@ -33,7 +33,7 @@
                                 </div>
                             </el-dialog>
                             <el-button type="danger" style="background:#EE2A69;color:#fff" class="plain deposit" size='mini' @click="showQRCode">Deposit</el-button>
-                            <el-dialog :visible.sync='showAddrQRCode' width='90%' class="qrcode_dialog">
+                            <el-dialog :visible.sync='showAddrQRCode' width='80%' class="qrcode_dialog" title="Deposit">
                                 <div id="qrcode"></div>
                                 <h3 class="addr_text">{{userInfo.addr_vevue}}</h3>
                                 <div @click="clipText('.addr_btn')" class="addr_btn" :aria-label='userInfo.addr_vevue'>Copy Address</div>
@@ -195,7 +195,9 @@ export default {
       this.$nextTick(() => {
         if (!this.qrcode) {
           this.qrcode = new QRCode(document.getElementById('qrcode'), {
-            text: this.userInfo.addr_vevue
+            text: this.userInfo.addr_vevue,
+            width: 200,
+            height: 200
           });
         }
       });
@@ -474,7 +476,7 @@ body {
         }
 
         .addr_text {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-top: 20px;
             margin-bottom: 5px;
         }

@@ -82,31 +82,6 @@ export default {
 </script>
 <style lang="stylus">
 
-.app-download-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 8px;
-
-  .left-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    &>* {
-      margin: 0 5px;
-    }
-
-    img {
-      display: block;
-      width: 40px;
-      background: #fff;
-      padding: 6px 2px;
-      border-radius: 4px;
-    }
-  }
-}
-
 body {
   background: #f5f5f5;
 }

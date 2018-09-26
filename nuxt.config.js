@@ -76,7 +76,6 @@ module.exports = {
   router: {
     middleware: 'redirect',
     scrollBehavior: function (to, from, savedPosition) { // 滚动条记忆
-      console.log(savedPosition);
       if (savedPosition) {
         return savedPosition
       }

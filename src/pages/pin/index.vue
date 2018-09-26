@@ -1,7 +1,7 @@
 <template>
   <div class="pin-vue">
-    <!-- <topHeaderDownload/> -->
-    <topHeaderSearch :downloadBar='false'/>
+    <topHeaderDownload/>
+    <!-- <topHeaderSearch :downloadBar='false'/> -->
     <div class="textFileWrapper" v-show="!taskMarker">
       <input type="text" id='searchTextField' class="controls searchTextField" placeholder="Search address">
     </div>
@@ -398,8 +398,8 @@ export default {
       const requestPannelDom = document.querySelector('.request-pannel');
       const requestAddressInfo = document.querySelector('.request-addressinfo');
       requestPannelDom.style.opacity = 0;
-      requestPannelDom.style.height =
-        requestAddressInfo.getBoundingClientRect().height + 'px';
+      // requestPannelDom.style.height =
+      //   requestAddressInfo.getBoundingClientRect().height + 'px';
       Object.assign(that.requestObj, {
         locationParam: '',
         note: '',
@@ -657,11 +657,13 @@ export default {
 
       controlUI.addEventListener('click', function() {
         // map.setCenter(chicago);
+        // !!!
+        // that.tempLocationPlace(map, that.locationMarker);
         that.locationPlace(map, that.locationMarker);
       });
     },
     locationPlace(map, marker) {
-      const that = this;
+      const that = this;      
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           var latlng = new google.maps.LatLng(
@@ -688,6 +690,32 @@ export default {
           });
         });
       }
+    },
+    tempLocationPlace(map,marker){
+      const that =this;
+      // !!! lat: 39.83, lng: -101.785 临时地址
+      var latlng = new google.maps.LatLng(
+            34.0434783,
+            -118.25193139999999
+          );
+          that.myLocation = latlng;
+          marker.setPosition(latlng);
+          map.setZoom(13);
+          map.setCenter(latlng);
+          that.showSwitch.taskswitch = true;
+          that.getMyTask(
+            map,
+            34.0434783,
+            -118.25193139999999
+          );
+          that.watchMyPoint = navigator.geolocation.watchPosition(pos => {
+            const crd = pos.coords;
+            that.myLocation = new google.maps.LatLng(
+              crd.latitude,
+              crd.longitude
+            );
+            marker.setPosition(that.myLocation);
+          });
     },
     getMyTask(map, lat, lng) {
       const that = this;

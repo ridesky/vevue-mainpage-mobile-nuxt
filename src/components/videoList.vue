@@ -18,13 +18,13 @@
         <div class="videoItem">
           <div class="cover-and-description" :class="{orange:0<video.price&&video.price<=70,purple:video.price>70}">
             <div class="videoCoverBox">
-              <router-link :to=" '/video/' + video.videoid" :title="video.yuan.note || video.yuan.title" class="image-box">
+              <router-link :to="video.shorturl?'/video/'+video.shorturl.split('video/')[1]: '/video/' + video.videoid" :title="video.yuan.note || video.yuan.title" class="image-box">
                 <img :src="video.coverURL" alt="" class="videoPoster posterImage" :onerror='defaultCoverLogo'>
               </router-link>
               <div class="video_time" v-if="video.video_time">{{jsFormat.sec_to_time(video.video_time)}}</div>
               <div class="title-avatar">
 
-                <router-link :to=" '/video/' + video.videoid" class=" title" v-if="video.yuan.title" :title="video.yuan.title">{{video.yuan.title}}</router-link>
+                <router-link :to="video.shorturl?'/video/'+video.shorturl.split('video/')[1]: '/video/' + video.videoid" class=" title" v-if="video.yuan.title" :title="video.yuan.title">{{video.yuan.title}}</router-link>
                 <div class="videoAvatarBox">
                   <!-- <router-link :to=" '/user/' + video.yuan.bywho +'/works'">
                     <img :src="video.avatar" alt="avatar" class="videoAvatar" :onerror='defaultAvatarLogo'>
@@ -37,7 +37,7 @@
               </div>
             </div>
             <div class="video-description" :class="{topborder:video.yuan.note}">
-              <router-link :to=" '/video/' + video.videoid" class=" title note" v-if="video.yuan.note" :title="video.yuan.note">{{video.yuan.note}}</router-link>
+              <router-link :to="video.shorturl?'/video/'+video.shorturl.split('video/')[1]: '/video/' + video.videoid" class=" title note" v-if="video.yuan.note" :title="video.yuan.note">{{video.yuan.note}}</router-link>
             </div>
           </div>
           <div class="likesmen" v-if="video.tipslikes.length>0">
@@ -62,7 +62,7 @@
             </div>
             <div class="video-meta-menu iconfont icon-menu_col" :class="{'stay':showMetaMenuIndex === index}" v-on:click="toShowMetaMenuIndex(index)">
               <ul class="meta-sel">
-                <li class="sel" @click="clipAddress('.clipBtn'+index)" :class="'clipBtn'+index" :aria-label='location.origin+"/video/"+video.videoid'>
+                <li class="sel" @click="clipAddress('.clipBtn'+index)" :class="'clipBtn'+index" :aria-label='video.shorturl?video.shorturl:location.origin+"/video/"+video.videoid'>
                   Copy Link
                 </li>
                 <li class="sel" v-if="showRemoveHistory" @click="toRemoveHistory(video.videoid,index,0)">
@@ -437,7 +437,7 @@ export default {
   .videoList {
     width: 100%;
     // overflow: hidden;
-    padding: 10px 10px 15px;
+    padding: 11.5px 10px 15px;
     font-size: 1.2rem;
     border-bottom: solid 1px #ccc;
   }
