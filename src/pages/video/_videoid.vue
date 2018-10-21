@@ -1,7 +1,7 @@
 <template>
   <no-ssr>
     <div>
-      <topHeaderDownload/>
+      <topHeaderDownload />
       <div class="player-vue" :class="{'fixed-video':fixedVideo}">
         <section>
           <div class="video-detail">
@@ -68,137 +68,137 @@
                   <input v-if="userid" type="text" placeholder="Fire danmaku!!" v-model="danmakuText" @keyup.13="sendDanmaku" @blur="toWindowTop">
                   <input v-else disabled type="text" placeholder="Login to fire danmaku" v-model="danmakuText">
                 </div>
-                <div v-if="userid">
-                  <div @click="sendDanmaku" class="sendButton" v-show="countdown.fireDanmaku <=0">Fire</div>
-                  <div class="sendButton disabled" v-show="countdown.fireDanmaku > 0">{{countdown.fireDanmaku}}</div>
-                </div>
-                <a v-else :href="'/login?continue='+hashUrl" class="sendButton">Login</a>
-              </div>
-            </div>
-            <div class="videoMeta headMeta" ref='headMeta'>
-              <div class="flex1">
-                <h3 v-if="video.videoid" class="title">{{video.title}}</h3>
-                <h3 v-else class="title notitle"></h3>
-                <p v-if="video.videoid" class="note" :class="{'show-all-note':showAllNote}" @click="showAllNote = !showAllNote">{{video.note}}</p>
-                <p v-else class="note nonote"></p>
-                <div class="inforender">
-                  <div v-if="video.videoid" class="view">{{video.view}} views {{video.likes}} likes</div>
-                  <div v-else class="view noview"></div>
+                  <div v-if="userid">
+                    <div @click="sendDanmaku" class="sendButton" v-show="countdown.fireDanmaku <=0">Fire</div>
+                    <div class="sendButton disabled" v-show="countdown.fireDanmaku > 0">{{countdown.fireDanmaku}}</div>
+                  </div>
+                  <a v-else :href="'/login?continue='+hashUrl" class="sendButton">Login</a>
                 </div>
               </div>
-              <div class="menu-container">
-                <div class="like-tag" v-show="video.isLike" @click="toggleLike(false)">Like
-                  <i class="iconfont icon-like-heart"></i>
-                </div>
-                <div v-if="video.videoid">
-                  <div class="like-tag" v-show="!video.isLike" @click="toggleLike(true)">Like
-                    <i class="iconfont icon-like"></i>
+              <div class="videoMeta headMeta" ref='headMeta'>
+                <div class="flex1">
+                  <h3 v-if="video.videoid" class="title">{{video.title}}</h3>
+                  <h3 v-else class="title notitle"></h3>
+                  <p v-if="video.videoid" class="note" :class="{'show-all-note':showAllNote}" @click="showAllNote = !showAllNote">{{video.note}}</p>
+                  <p v-else class="note nonote"></p>
+                  <div class="inforender">
+                    <div v-if="video.videoid" class="view">{{video.view}} views {{video.likes}} likes</div>
+                    <div v-else class="view noview"></div>
                   </div>
                 </div>
-                <div class="like-tag nolike" v-else></div>
+                <div class="menu-container">
+                  <div class="like-tag" v-show="video.isLike" @click="toggleLike(false)">Like
+                    <i class="iconfont icon-like-heart"></i>
+                  </div>
+                  <div v-if="video.videoid">
+                    <div class="like-tag" v-show="!video.isLike" @click="toggleLike(true)">Like
+                      <i class="iconfont icon-like"></i>
+                    </div>
+                  </div>
+                  <div class="like-tag nolike" v-else></div>
+                </div>
               </div>
-            </div>
-            <div class="videoMeta">
-              <div class="owner">
-                <div class="flexLeft">
-                  <div class="avatar" v-if="video.avatar">
-                    <router-link :to='"/user/" + video.bywho'>
-                      <img :src="video.avatar" alt="" v-show="video.avatar">
+              <div class="videoMeta">
+                <div class="owner">
+                  <div class="flexLeft">
+                    <div class="avatar" v-if="video.avatar">
+                      <router-link :to='"/user/" + video.bywho'>
+                        <img :src="video.avatar" alt="" v-show="video.avatar">
                     </router-link>
+                    </div>
+                    <div v-else class="avatar noavatar"></div>
+                    <div class="ownerInfo">
+                      <span v-if="video.videoid">{{video.nickname}}</span>
+                      <span v-else class="nonickname"></span>
+                      <span v-if="video.videoid">{{video.time}}</span>
+                      <span v-else class="notime"></span>
+                    </div>
                   </div>
-                  <div v-else class="avatar noavatar"></div>
-                  <div class="ownerInfo">
-                    <span v-if="video.videoid">{{video.nickname}}</span>
-                    <span v-else class="nonickname"></span>
-                    <span v-if="video.videoid">{{video.time}}</span>
-                    <span v-else class="notime"></span>
+                  <div v-show="video.videoid && (userid !== video.bywho)">
+                    <div class="followed toFollow" v-show="!video.hasfollowed" @click="toFollow(true)">Follow</div>
+                    <div class="followed toUnfollow" v-show="video.hasfollowed" @click="toFollow(false)">UnFollow</div>
                   </div>
-                </div>
-                <div v-show="video.videoid && (userid !== video.bywho)">
-                  <div class="followed toFollow" v-show="!video.hasfollowed" @click="toFollow(true)">Follow</div>
-                  <div class="followed toUnfollow" v-show="video.hasfollowed" @click="toFollow(false)">UnFollow</div>
                 </div>
               </div>
-            </div>
-            <div class="videoMeta op1 right-comment" v-show="video.videoid">
-              <div class="comments">
-                <div class="toWrite">
-                  <el-tag class="count" size="mini" type="warning">{{video.comment}} Comments</el-tag>
-                  <div class="showLoading" v-if="commentPack.showLoading">
-                    <img src="../../assets/images/loading_bar.gif" alt="">
+              <div class="videoMeta op1 right-comment" v-show="video.videoid">
+                <div class="comments">
+                  <div class="toWrite">
+                    <el-tag class="count" size="mini" type="warning">{{video.comment}} Comments</el-tag>
+                    <div class="showLoading" v-if="commentPack.showLoading">
+                      <img src="../../assets/images/loading_bar.gif" alt="">
                   </div>
-                  <div v-else>
-                    <div class="writeBox" v-if="userid">
-                      <div class="thumbnail">
-                        <img :src="avatar" alt="" class="img">
-                      </div>
-                      <div class="inputBox">
-                        <input class="textarea" ref="textarea" type="text" placeholder="Write Comment" rows="1" v-model="commentPack.commentText" autocomplete="off" maxlength="50">
-                      </div>
-                      <div class="arr" @click="toComment" :class="{opacity2:commentPack.commentText.length===0}">Comment</div>
-                    </div>
-                    <div class="writeBox" v-else>
-                      <div class="thumbnail">
-                        <img :src="avatar" class="img">
-                      </div>
-                      <div class="inputBox">
-                        Please
-                        <a class="loginlink" :href="'/login?continue='+hashUrl"> login</a> to post a comment
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="contents">
-                  <div v-for="(reply,index) in replies" :key="index" class="replyWrap">
-                    <div class="avatarBox">
-                      <router-link :to=" '/user/' + reply.bywho">
-                        <img :src="reply.avatar" :onerror='logo'>
-                      </router-link>
-                    </div>
-                    <div class="con">
-                      <div class="user">{{reply.nickname}}</div>
-                      <div class="text">{{reply.text}}</div>
-                      <div class="info">
-                        <span>{{reply.date}}</span>
-                        <span class="showReply" @click="showReply(index,reply)" v-show="userid !== reply.bywho">Reply</span>
-                      </div>
-                      <ul class="replyToMsgLists">
-                        <li v-for="(replyToMsg,rtIndex) in reply.replyToMsgs" :key="rtIndex">
-                          <div class="avatarBox">
-                            <router-link :to=" '/user/' + replyToMsg.bywho">
-                              <img :src="replyToMsg.avatar">
-                            </router-link>
-                          </div>
-                          <div class="con">
-                            <div class="user">{{replyToMsg.nickname}}</div>
-                            <div class="text">{{replyToMsg.text}}</div>
-                            <div class="info">
-                              <span>{{replyToMsg.date}}</span>
-                              <span class="showReply" @click="showReply(index,replyToMsg)" v-show="userid !== replyToMsg.bywho">Reply</span>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                      <div class="commentBoxRender" v-show="replyPack.showReplyIndex === index">
-                        <div class="showLoading" v-if="replyPack.showLoading">
-                          <img src="../../assets/images/loading_bar.gif">
-                        </div>
-                        <div class="writeBox" v-else :class="'showReply'+index" :ref="'showReply'+index">
+                      <div v-else>
+                        <div class="writeBox" v-if="userid">
                           <div class="thumbnail">
                             <img :src="avatar" alt="" class="img">
-                          </div>
-                          <div class="inputBox">
-                            <input class="textarea" ref='rextarea' @blur="restoreInputHeight" type="text" :placeholder="'@' + replyPack.replySelected.nickname" rows="1" v-model="replyPack.replyText" autocomplete="off" maxlength="50">
-                          </div>
-                          <div class="arr" @click="toReply(0)" :class="{opacity2:replyPack.replyText.length === 0}">Reply</div>
-                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                            <div class="inputBox">
+                              <input class="textarea" ref="textarea" type="text" placeholder="Write Comment" rows="1" v-model="commentPack.commentText" autocomplete="off" maxlength="50">
+                      </div>
+                              <div class="arr" @click="toComment" :class="{opacity2:commentPack.commentText.length===0}">Comment</div>
+                            </div>
+                            <div class="writeBox" v-else>
+                              <div class="thumbnail">
+                                <img :src="avatar" class="img">
+                      </div>
+                                <div class="inputBox">
+                                  Please
+                                  <a class="loginlink" :href="'/login?continue='+hashUrl"> login</a> to post a comment
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="contents">
+                            <div v-for="(reply,index) in replies" :key="index" class="replyWrap">
+                              <div class="avatarBox">
+                                <router-link :to=" '/user/' + reply.bywho">
+                                  <img :src="reply.avatar" :onerror='logo'>
+                      </router-link>
+                              </div>
+                              <div class="con">
+                                <div class="user">{{reply.nickname}}</div>
+                                <div class="text">{{reply.text}}</div>
+                                <div class="info">
+                                  <span>{{reply.date}}</span>
+                                  <span class="showReply" @click="showReply(index,reply)" v-show="userid !== reply.bywho">Reply</span>
+                                </div>
+                                <ul class="replyToMsgLists">
+                                  <li v-for="(replyToMsg,rtIndex) in reply.replyToMsgs" :key="rtIndex">
+                                    <div class="avatarBox">
+                                      <router-link :to=" '/user/' + replyToMsg.bywho">
+                                        <img :src="replyToMsg.avatar">
+                            </router-link>
+                                    </div>
+                                    <div class="con">
+                                      <div class="user">{{replyToMsg.nickname}}</div>
+                                      <div class="text">{{replyToMsg.text}}</div>
+                                      <div class="info">
+                                        <span>{{replyToMsg.date}}</span>
+                                        <span class="showReply" @click="showReply(index,replyToMsg)" v-show="userid !== replyToMsg.bywho">Reply</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                                <div class="commentBoxRender" v-show="replyPack.showReplyIndex === index">
+                                  <div class="showLoading" v-if="replyPack.showLoading">
+                                    <img src="../../assets/images/loading_bar.gif">
+                        </div>
+                                    <div class="writeBox" v-else :class="'showReply'+index" :ref="'showReply'+index">
+                                      <div class="thumbnail">
+                                        <img :src="avatar" alt="" class="img">
+                          </div>
+                                        <div class="inputBox">
+                                          <input class="textarea" ref='rextarea' @blur="restoreInputHeight" type="text" :placeholder="'@' + replyPack.replySelected.nickname" rows="1" v-model="replyPack.replyText" autocomplete="off" maxlength="50">
+                          </div>
+                                          <div class="arr" @click="toReply(0)" :class="{opacity2:replyPack.replyText.length === 0}">Reply</div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
         </section>
       </div>
     </div>
@@ -250,7 +250,9 @@ export default {
       videoDPI: ['1080', '2K', 'origin'],
       playlist: [],
       videoDPISet: '1080',
-      videoBoxHeight: process.client ? window.screen.width * 9 / 16 + 'px' : '',
+      videoBoxHeight: process.client
+        ? (window.screen.width * 9) / 16 + 'px'
+        : '',
       replies: [],
       replyPack: {
         showReplyIndex: -1,
@@ -325,9 +327,10 @@ export default {
       videoid: context.params.videoid
     });
     result = result.data;
+    console.log(result);
     if (result.errcode === 0) {
       return {
-        videoLink: result.link,
+        videoLink: result.link || context.params.videoid,
         videoSeoTitle: result.title,
         videoSeoNote: result.note
       };
@@ -367,7 +370,8 @@ export default {
         },
         {
           property: 'og:image',
-          content: this.apiUrl.videoURL + this.videoLink + '.jpg'
+          content:
+            this.apiUrl.videoURL + this.videoLink.split('::main')[0] + '.jpg'
         },
         {
           property: 'og:width',
@@ -667,7 +671,7 @@ export default {
               let vrWidth = null;
               let vrHeight = null;
               vrWidth = '100%';
-              vrHeight = window.screen.width * 9 / 16 + 'px';
+              vrHeight = (window.screen.width * 9) / 16 + 'px';
               that.showVRPlayer = true;
               that.vrView = new VRView.Player('#vrview', {
                 video:
@@ -863,9 +867,10 @@ export default {
         function() {
           window.player = this;
           window.vue = that;
-          that.$refs.video.style.height = window.screen.width * 9 / 16 + 'px';
+          that.$refs.video.style.height = (window.screen.width * 9) / 16 + 'px';
           window.onresize = function() {
-            that.$refs.video.style.height = window.screen.width * 9 / 16 + 'px';
+            that.$refs.video.style.height =
+              (window.screen.width * 9) / 16 + 'px';
             that.danmaku.resize();
           };
           (function() {
